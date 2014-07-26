@@ -1,0 +1,42 @@
+## this function have four sub function : get, set, getInverse, setInverse
+## get function returns matrix which is cached
+## set function make cache matrix from given input matrix
+## getInverse return inverse of cached matrix
+## setInverse set inverse with given value
+## function returns all for function in a list with their name
+
+makeCacheMatrix <- function(inputMatrix = matrix()) {
+	inverseOfMatrix = NULL
+	set <- function(newMatrix){
+		inputMatrix <<- newMatrix
+		inverseOfMatrix <<- NULL
+	}
+	get <- function(){
+		return(inputMatrix)
+	}
+	setInverse <- function(inverse) {
+		 inverseOfMatrix <<- inverse
+	}
+	getInverse <- function(){
+		return(inverseOfMatrix)
+	}
+	return(list(set = set, get = get, setInverse  = setInverse, getInverse = getInverse))
+}
+## this funciton checks for given argument that inverse is already calculated or not
+## if inverse is calculated and matrix is not modified then return cached inverse for cached matrix
+## if matrix is new or modified then calculate inverse and return it
+
+cacheSolve <- function(dataMatrix) {
+	inverse= dataMatrix$getInverse()
+	if(!is.null(inverse)){
+		message('getting inverse from cache data')
+		## return inverse from cached data
+		return(inverse)
+	}
+	data = dataMatrix$get()
+	inverse = solve(data)
+	dataMatrix$setInverse(inverse)
+
+  ## Return a matrix that is the inverse of dataMatrix
+	return(inverse)
+}
